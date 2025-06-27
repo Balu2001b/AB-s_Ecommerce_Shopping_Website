@@ -463,27 +463,31 @@ font-weight: 500;
 .nav-menu {
   display: none;
   position: fixed;
-  top: 0px;
+  top: 70px;
   right: 0;
-  width: 200px;
+  width: 180px;
   height: auto;
-  background: white;
+  background: #ccc;
   padding: 20px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   z-index: 1999;
   animation: slideDown 0.3s ease;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+
 }
 
 .nav-menu ul {
   list-style: none;
   padding: 0;
-  text-align: center;
-  
+  margin-left: 10px;
+  margin-top: 30px;
 }
 
 .nav-menu ul li {
-  margin: 20px 0;
+  margin: 10px 0;
+  
 }
 
 .nav-menu ul li a {
@@ -491,6 +495,7 @@ font-weight: 500;
   color: black;
   font-size: 13px;
   transition: color 0.3s;
+  
 }
 
 .nav-menu ul li a:hover {
