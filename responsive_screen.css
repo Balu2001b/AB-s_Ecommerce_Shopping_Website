@@ -45,6 +45,7 @@
 
       .hamburger {
     display: flex;
+    position: fixed;
   }
 
   .nav-menu.active {
