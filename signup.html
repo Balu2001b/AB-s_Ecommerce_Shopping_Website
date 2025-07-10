@@ -249,6 +249,61 @@ width: 350px;
     font-weight: 600;
     color: white;
 }
+
+.toast {
+    min-width: 250px;
+    background-color: #009E60;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: fixed;
+    z-index: 9999;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    font-size: 17px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Show the toast message */
+.toast.show {
+    animation: slideFadeIn 0.6s ease forwards, slideFadeOut 0.6s ease 2.8s forwards;
+}
+
+/* Smooth fade in and slide down */
+@keyframes slideFadeIn {
+    from {
+        top: 0;
+        opacity: 0;
+    }
+    to {
+        top: 70px;
+        opacity: 1;
+    }
+}
+
+/* Smooth fade out and slide up */
+@keyframes slideFadeOut {
+    from {
+        top: 70px;
+        opacity: 1;
+    }
+    to {
+        top: 0;
+        opacity: 0;
+    }
+}
+
+/* Optional color variations */
+.toast.success { background-color: #28a745; }
+.toast.error   { background-color: #dc3545; }
+.toast.info    { background-color: #007bff; }
+
+
+
+
  
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -256,7 +311,7 @@ width: 350px;
 <body>
 
     <div class="ab-logo">
-        <img src="./fashion_logo1.png" alt="">
+        <img src="./fashion_logo1.JPG" alt="">
         <a href=""><p>AB's Fashion.com</p></a>
     </div>
 
@@ -267,7 +322,7 @@ width: 350px;
                 <!-- Login Form -->
                 <div class="login-form">
                     <div class="title">Signup</div>
-                    <form action="" id="signupForm">
+                    <form action="/signup" id="signupForm" method="POST">
                         <div class="input-boxes">
                             <div class="input-box">
                                 <i class="fas fa-envelope"></i>
@@ -314,5 +369,54 @@ width: 350px;
         });
       </script>
     
+
+
+    <script>
+  document.getElementById("signupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("username").value.trim();
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+
+    // ✅ Basic frontend validation
+    if (!name || !email || !password) {
+      showToast("Please fill in all fields", "error");
+      return;
+    }
+
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
+      });
+
+      if (res.status === 201) {
+        showToast("Signup successful!", "success");
+        setTimeout(() => window.location.href = "login.html", 1500);
+      } else if (res.status === 400) {
+        showToast("Email already exists", "error");
+      } else {
+        showToast("Unexpected error", "error");
+      }
+    } catch (error) {
+      showToast("Server error. Try again later.", "error");
+    }
+  });
+
+ function showToast(message, type = "success") {
+  const toast = document.createElement("div");
+  toast.className = `toast ${type} show`;
+  toast.innerText = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => toast.remove(), 4000); // after animation
+}
+
+</script>
+
+
+
 </body>
 </html>
